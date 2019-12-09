@@ -1,9 +1,9 @@
-variable env                {}
-variable name               {}
-variable ipv4_range         {}
+variable project                {}
+variable name                   {}
+variable ipv4_range             {}
 variable subnetwork_ip_range    {type="list"}
-variable auto-subnets       {}
-variable routing_mode       {}
-variable subnet_count       {}
-variable description        {}
-variable region             {}
+variable auto-subnets           {}
+variable routing_mode           {}
+variable subnet_count           {}
+variable description            {}
+variable region                 {}
