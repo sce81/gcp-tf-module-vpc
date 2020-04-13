@@ -27,13 +27,13 @@ resource "google_compute_router" "router" {
 }
 
 resource "google_compute_address" "address" {
-  count                                 = "${var.subnet_count}"
+  count                                 = length(var.subnetwork_ip_range)
   name                                  = "${var.env}-${var.name}-nat-ip-${count.index +1}"
   region                                = "${var.region}"
 }
 
 resource "google_compute_router_nat" "advanced-nat" {
-  count                                 = "${var.subnet_count}"                        
+  count                                 = length(var.subnetwork_ip_range)                      
   name                                  = "${var.env}-nat-${count.index +1}"
   router                                = "${google_compute_router.router.name}"
   region                                = "${var.region}"
