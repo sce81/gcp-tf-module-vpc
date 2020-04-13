@@ -1,9 +1,7 @@
-variable project                {}
-variable name                   {}
+variable env                    {}
+variable name                   {default = "vpc"}
 variable ipv4_range             {}
 variable subnetwork_ip_range    {type="list"}
-variable auto-subnets           {}
-variable routing_mode           {}
-variable subnet_count           {}
-variable description            {}
+variable auto-subnets           {default = "false"}
+variable routing_mode           {default = "REGIONAL"}
 variable region                 {}

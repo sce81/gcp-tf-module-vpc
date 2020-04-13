@@ -1,14 +1,14 @@
 resource "google_compute_network" "network" {
-  name                                  = "${var.project}-vpc"
+  name                                  = "${var.env}-vpc"
   routing_mode                          = "${var.routing_mode}"
   auto_create_subnetworks               = "${var.auto-subnets}"
-  description                           = "${var.description}"
+  description                           = "google compute network for ${var.env}"
 
 }
 
 resource "google_compute_subnetwork" "subnet" {
-  count                                 = "${var.subnet_count}"
-  name                                  = "${var.project}-${var.name}-subnet-${count.index +1}"
+  count                                 = length(var.subnetwork_ip_range)
+  name                                  = "${var.env}-${var.name}-subnet-${count.index +1}"
   ip_cidr_range                         = "${element(var.subnetwork_ip_range,count.index)}"
   region                                = "${var.region}"
   network                               = "${google_compute_network.network.name}"
@@ -18,7 +18,7 @@ resource "google_compute_subnetwork" "subnet" {
 
 
 resource "google_compute_router" "router" {
-  name                                  = "${var.project}-router"
+  name                                  = "${var.env}-router"
   region                                = "${var.region}"
   network                               = "${google_compute_network.network.self_link}"
   bgp {
@@ -28,13 +28,13 @@ resource "google_compute_router" "router" {
 
 resource "google_compute_address" "address" {
   count                                 = "${var.subnet_count}"
-  name                                  = "${var.project}-${var.name}-nat-ip-${count.index +1}"
+  name                                  = "${var.env}-${var.name}-nat-ip-${count.index +1}"
   region                                = "${var.region}"
 }
 
 resource "google_compute_router_nat" "advanced-nat" {
   count                                 = "${var.subnet_count}"                        
-  name                                  = "${var.project}-nat-${count.index +1}"
+  name                                  = "${var.env}-nat-${count.index +1}"
   router                                = "${google_compute_router.router.name}"
   region                                = "${var.region}"
   nat_ip_allocate_option                = "MANUAL_ONLY"
