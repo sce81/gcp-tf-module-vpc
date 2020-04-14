@@ -11,7 +11,7 @@ output "vpc_self_link" {
 }
 
 output "subnet_name" {
-  value = [google_compute_subnetwork.network[*].name]
+  value = [google_compute_subnetwork.subnet[*].name]
 }
 
 output "subnet_gateway" {
