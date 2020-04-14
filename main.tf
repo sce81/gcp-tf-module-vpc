@@ -32,7 +32,7 @@ resource "google_compute_address" "address" {
   region                                = "${var.region}"
 }
 
-resource "google_compute_router_nat" "advanced-nat" {
+resource "google_compute_router_nat" "nat" {
   count                                 = length(var.subnetwork_ip_range)                      
   name                                  = "${var.env}-nat-${count.index +1}"
   router                                = "${google_compute_router.router.name}"
